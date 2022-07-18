@@ -1,5 +1,5 @@
 <template>
-  <div class="devtools">devtools</div>
+  <div class="devtools">devtools 1</div>
 </template>
 
 <script setup>
@@ -47,9 +47,9 @@ onMounted(() => {
 
   function initPanel() {
     chrome.devtools.panels.create(
-      'three.js debug',
-      'assets/icon16.png"',
-      'devtools/index.html',
+      'three.js debug 1',
+      'assets/logo.png"',
+      'views_devtools.html',
       function (panel) {
         console.log('in devtools.js: panel created', panel)
       }

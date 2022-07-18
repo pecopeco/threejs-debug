@@ -4,27 +4,27 @@
   "manifest_version": 3,
   "action": {
     "default_icon": {
-      "16": "assets/icon16.png",
-      "48": "assets/icon48.png",
-      "128": "assets/icon128.png"
+      "16": "assets/logo.png",
+      "48": "assets/logo.png",
+      "128": "assets/logo.png"
     },
     "default_title": "Popup Sample",
-    "default_popup": "popup/index.html"
+    "default_popup": "./views/popup.html"
   },
   "icons": {
-    "16": "assets/icon16.png",
-    "48": "assets/icon48.png",
-    "128": "assets/icon128.png"
+    "16": "assets/logo.png",
+    "48": "assets/logo.png",
+    "128": "assets/logo.png"
   },
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "./views/background.js"
   },
-  "devtools_page": "devtools/index.html",
+  "devtools_page": "./views/devtools.html",
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
       "run_at": "document_start",
-      "js": ["content-scripts/main.js"]
+      "js": ["./views/content-scripts/main.js"]
     }
   ],
   "permissions": [
