@@ -23,9 +23,9 @@
   "devtools_page": "./views/devtools.html",
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*"],
+      "matches": ["<all_urls>"],
       "run_at": "document_start",
-      "js": ["./views/content/main.js"]
+      "js": ["./views/content_scripts.js"]
     }
   ],
   "permissions": [
