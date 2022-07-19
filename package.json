@@ -2,7 +2,6 @@
   "name": "vue3-start",
   "version": "0.0.0",
   "scripts": {
-    "start": "vite",
     "watch": "vite build --watch",
     "build": "vite build",
     "build:test": "vite build --mode test",
