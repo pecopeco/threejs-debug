@@ -28,6 +28,10 @@
       "js": ["./views/content_scripts.js"]
     }
   ],
+  "web_accessible_resources": [{
+    "resources": ["injected_scripts.js"],
+    "matches": ["<all_urls>"]
+  }],
   "permissions": [
     "identity", "storage", "tabs"
   ]
