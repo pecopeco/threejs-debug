@@ -4,18 +4,20 @@ s.src = url
 document.documentElement.appendChild(s)
 
 // 监听injected_scripts
+let threeObj
 window.addEventListener('injected_event', function (params) {
   // 向devtools发送消息
-  chrome.runtime.sendMessage(params.detail)
+  threeObj = params.detail
 })
 
-// 监听来自devtools的消息（不生效）
+// 监听来自devtools的消息
 chrome.runtime.onMessage.addListener(function (
   request,
   sender,
   sendResponse
 ) {
-  console.log('收到来自devtools的消息：')
+  chrome.runtime.sendMessage(threeObj)
+  sendResponse('get devtools message, callback')
 })
 
 // 通知injected_script获取threejs对象
