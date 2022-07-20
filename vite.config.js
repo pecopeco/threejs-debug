@@ -69,29 +69,6 @@ export default ({ mode }) => {
       rollupOptions: {
         input: resolve(__dirname, 'src/manifest.json') // 将源码中的manifest.json作为入口文件
       },
-    },
-    css: {
-      postcss: {
-        plugins: [
-          postcsspxtoviewport({
-            unitToConvert: 'px',
-            viewportWidth: 1500,
-            unitPrecision: 5,
-            propList: ['*'],
-            viewportUnit: 'vw',
-            fontViewportUnit: 'vw',
-            selectorBlackList: [],
-            minPixelValue: 1,
-            mediaQuery: true,
-            replace: true,
-            exclude: undefined,
-            include: undefined,
-            landscape: false,
-            landscapeUnit: 'vw',
-            landscapeWidth: 568
-          })
-        ]
-      }
     }
   })
 }

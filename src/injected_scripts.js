@@ -1,29 +1,35 @@
 // 传递threejs对象到content
 function postContent () {
-  if (!scene || !camera) {
+  if (!window._scene || !window._camera) {
     return
   }
+  const scene = transObj(window._scene)
+  const camera = transObj(window._camera)
   // 将获取到的threejs对象传递给content_scripts
   let postEvent = new CustomEvent('injected_event', { detail: { scene: scene, camera: camera }})
   window.dispatchEvent(postEvent)
 }
 
-// 监听scene属性变化
-let scene
-Object.defineProperty(window, 'scene', { 
-  set: function (newValue) { 
-    scene = transObj(newValue)
+// 监听camera属性变化
+Object.defineProperty(window, 'camera', { 
+  set: function (newValue) {
+    window._camera = newValue
     postContent()
   }
 })
 
-// 监听camera属性变化
-let camera
-Object.defineProperty(window, 'camera', { 
+// 监听scene属性变化
+Object.defineProperty(window, 'scene', { 
   set: function (newValue) { 
-    camera = transObj(newValue)
+    window._scene = newValue
     postContent()
   }
+})
+
+// 监听content_scripts的消息，更新threeObj
+let threeObj
+window.addEventListener('content_event', function (params) {
+  postContent()
 })
 
 /**
@@ -42,6 +48,8 @@ function transObj (obj, layer = 0) {
     ) return
     if (typeof obj[key] === 'object' && layer < 1) {
       return newObj[key] = transObj(obj[key], 1)
+    } else if (isFinite(obj[key]) && typeof obj[key] === 'number') {
+      newObj[key] = obj[key].toFixed(6)
     } else {
       newObj[key] = obj[key]
     }
