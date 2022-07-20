@@ -1,11 +1,12 @@
 <template>
-  <div class="devtools" @click="postThree">devtools 2</div>
-  <span>{{scene}}</span>
-  <span>{{camera}}</span>
+  <span>{{ scene }}</span>
+  <span>{{ camera }}</span>
+  <Tree />
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import Tree from '@/components/Tree.vue'
 
 // 监听来自content-script的消息
 const scene = ref({})
@@ -40,7 +41,7 @@ const postThree = (tab) => {
 const initPanel = () => {
   chrome.devtools.panels.create(
     'three.js debug 1',
-    'assets/logo.png"',
+    'assets/logo.png',
     'views_devtools.html',
     async function (panel) {
       // 初始化完成，通知content_scripts
@@ -55,7 +56,7 @@ onMounted(() => {
 })
 </script>
 
-<style scoped>
+<style lang="stylus" scoped>
 .devtools {
   display: flex;
   justify-content: center;

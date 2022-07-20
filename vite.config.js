@@ -75,7 +75,7 @@ export default ({ mode }) => {
         plugins: [
           postcsspxtoviewport({
             unitToConvert: 'px',
-            viewportWidth: 750,
+            viewportWidth: 1500,
             unitPrecision: 5,
             propList: ['*'],
             viewportUnit: 'vw',
