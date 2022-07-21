@@ -46,7 +46,7 @@ watch(isAutoRefresh, () => {
   if (isAutoRefresh.value) {
     timer = setInterval(() => {
       postThree()
-    }, 10)
+    }, 20)
   }
 })
 

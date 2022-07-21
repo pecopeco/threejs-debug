@@ -27,7 +27,6 @@ Object.defineProperty(window, 'scene', {
 })
 
 // 监听content_scripts的消息，更新threeObj
-let threeObj
 window.addEventListener('content_event', function (params) {
   postContent()
 })
@@ -48,8 +47,6 @@ function transObj (obj, layer = 0) {
     ) return
     if (typeof obj[key] === 'object' && layer < 1) {
       return newObj[key] = transObj(obj[key], 1)
-    } else if (isFinite(obj[key]) && typeof obj[key] === 'number') {
-      newObj[key] = obj[key].toFixed(6)
     } else {
       newObj[key] = obj[key]
     }
