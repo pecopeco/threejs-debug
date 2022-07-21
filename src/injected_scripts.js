@@ -14,9 +14,8 @@ let timer
 Object.defineProperty(window, 'camera', { 
   set: function (newValue) {
     camera = newValue
-    let _camera = newValue
     let x = camera.position.x
-    Object.defineProperty(_camera.position, 'x', {
+    Object.defineProperty(camera.position, 'x', {
       get () {
         return x
       },
