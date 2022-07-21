@@ -1,27 +1,27 @@
 // 传递threejs对象到content
 function postContent () {
-  if (!window._scene || !window._camera) {
+  if (!scene || !camera) {
     return
   }
-  const scene = transObj(window._scene)
-  const camera = transObj(window._camera)
   // 将获取到的threejs对象传递给content_scripts
-  let postEvent = new CustomEvent('injected_event', { detail: { scene: scene, camera: camera }})
+  let postEvent = new CustomEvent('injected_event', { detail: { scene: transObj(scene), camera: transObj(camera) }})
   window.dispatchEvent(postEvent)
 }
 
 // 监听camera属性变化
+let camera
 Object.defineProperty(window, 'camera', { 
   set: function (newValue) {
-    window._camera = newValue
+    camera = newValue
     postContent()
   }
 })
 
 // 监听scene属性变化
+let scene
 Object.defineProperty(window, 'scene', { 
   set: function (newValue) { 
-    window._scene = newValue
+    scene = newValue
     postContent()
   }
 })
