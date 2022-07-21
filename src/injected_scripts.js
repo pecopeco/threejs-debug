@@ -10,10 +10,26 @@ function postContent () {
 
 // 监听camera属性变化
 let camera
+let timer
 Object.defineProperty(window, 'camera', { 
   set: function (newValue) {
     camera = newValue
-    postContent()
+    let _camera = newValue
+    let x = camera.position.x
+    Object.defineProperty(_camera.position, 'x', {
+      get () {
+        return x
+      },
+      set (val) {
+        x = val
+        if (timer) return
+        timer = setTimeout(() => {
+          postContent()
+          clearTimeout(timer)
+          timer = null
+        }, 20)
+      }
+    })
   }
 })
 
@@ -22,7 +38,6 @@ let scene
 Object.defineProperty(window, 'scene', { 
   set: function (newValue) { 
     scene = newValue
-    postContent()
   }
 })
 
