@@ -1,11 +1,7 @@
 <template>
   <div class="devtools">
     <Tree :three="three" title="three" />
-    <div class="checkbox">
-      <input type="checkbox" v-model="isAutoRefresh">
-      <span>自动刷新</span>
-    </div>
-    <div class="refresh" @click="() => postThree(false)">
+    <div class="refresh" @click="postThree">
       <img src="@/assets/refresh.png">
     </div>
   </div>
@@ -35,30 +31,26 @@ const getCurrentTab = async () => {
 	return tab
 }
 
-// 自动更新开关
-const isAutoRefresh = ref(false)
-watch(isAutoRefresh, () => {
-  postThree(isAutoRefresh.value)
-})
-
 // 通知content_scripts传递获取threejs对象
-const postThree = (isAutoRefresh) => {
-  chrome.tabs.sendMessage(tabId.value, { isAutoRefresh: isAutoRefresh }, response => {
+const postThree = () => {
+  chrome.tabs.sendMessage(tabId.value, { devtoolsInit: devtoolsInit.value }, response => {
     getThree()
   })
 }
 
 // 初始化
 const tabId = ref(0)
+const devtoolsInit = ref(false)
 const initPanel = () => {
   chrome.devtools.panels.create(
     'three.js debug',
     'assets/logo.png',
     'views_devtools.html',
-    async function (panel) {
+    async function () {
       // 初始化完成，通知content_scripts
       const tab = await getCurrentTab()
       tabId.value = tab.id
+      devtoolsInit.value = true
       postThree()
     }
   )
@@ -75,22 +67,6 @@ onMounted(() => {
   display: flex;
   flex-direction: column
   padding: 15px;
-  .checkbox {
-    position: absolute;
-    right: 120px;
-    top: 16px;
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    cursor: pointer;
-    input {
-      width: 16px;
-      height: 16px;
-    }
-    span {
-      padding-bottom: 1px;
-    }
-  }
   .refresh {
     position: absolute;
     right: 20px;

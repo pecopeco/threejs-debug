@@ -3,30 +3,24 @@ const s = document.createElement('script')
 s.src = url
 document.documentElement.appendChild(s)
 
-// 监听injected_script获取threejs对象
+// 监听injected_script获取three对象，并传递给devtools
 let three
 window.addEventListener('injected_event', function (params) {
   // 保存three
   three = params.detail
-  // 传递给devtools
+  // 发送到devtools
   devtoolsInit && chrome.runtime.sendMessage(three)
 })
 
-// 监听devtools传递的消息，传递three
+// 监听devtools传递的消息，发送three对象
 let devtoolsInit = false
 chrome.runtime.onMessage.addListener(function (
   request,
   sender,
   sendResponse
 ) {
-  devtoolsInit = request.isAutoRefresh
-  chrome.runtime.sendMessage(three)
-  getThree()
+  devtoolsInit = request.devtoolsInit
+  if (!devtoolsInit) return
+  three && chrome.runtime.sendMessage(three)
   sendResponse('get devtools message, callback')
 })
-
-// 通知injected_scripts更新three
-function getThree () {
-  let postEvent = new CustomEvent('content_event', { detail: {}})
-  window.dispatchEvent(postEvent)
-}

@@ -33,11 +33,6 @@ Object.defineProperty(window, 'threeObj', {
   }
 })
 
-// 监听content_scripts的消息，更新threeObj
-window.addEventListener('content_event', function (params) {
-  postContent()
-})
-
 /**
  * @description: 转换特殊对象为普通对象
  * @param {*} obj 需转换的对象
