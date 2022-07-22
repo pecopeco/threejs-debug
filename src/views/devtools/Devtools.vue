@@ -63,15 +63,14 @@ onMounted(() => {
 
 <style lang="stylus" scoped>
 .devtools {
-  position: relative;
   display: flex;
   flex-direction: column
   padding: 15px;
   .refresh {
-    position: absolute;
+    position: fixed;
     right: 20px;
     top: 16px;
-    width: 26px;
+    width: 22px;
     cursor: pointer;
     img {
       width: 100%
