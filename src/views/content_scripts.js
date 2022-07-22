@@ -20,7 +20,6 @@ chrome.runtime.onMessage.addListener(function (
   sendResponse
 ) {
   devtoolsInit = request.devtoolsInit
-  if (!devtoolsInit) return
-  three && chrome.runtime.sendMessage(three)
+  three && devtoolsInit && chrome.runtime.sendMessage(three)
   sendResponse('get devtools message, callback')
 })

@@ -4,17 +4,17 @@
   "manifest_version": 3,
   "action": {
     "default_icon": {
-      "16": "assets/logo.png",
-      "48": "assets/logo.png",
-      "128": "assets/logo.png"
+      "16": "assets/icon.png",
+      "48": "assets/down.png",
+      "128": "assets/refresh.png"
     },
     "default_title": "Popup Sample",
     "default_popup": "./views/popup.html"
   },
   "icons": {
-    "16": "assets/logo.png",
-    "48": "assets/down.png",
-    "128": "assets/refresh.png"
+    "16": "assets/icon.png",
+    "48": "assets/icon.png",
+    "128": "assets/icon.png"
   },
   "background": {
     "service_worker": "./views/background.js",
