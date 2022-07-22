@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 import Tree from '@/components/Tree.vue'
 
 // 监听来自content-script的消息

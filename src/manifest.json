@@ -33,6 +33,6 @@
     "matches": ["<all_urls>"]
   }],
   "permissions": [
-    "identity", "storage", "tabs"
+    "tabs"
   ]
 }

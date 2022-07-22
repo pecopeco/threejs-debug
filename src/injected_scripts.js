@@ -51,11 +51,7 @@ function listenerObj (obj) {
   })
 }
 
-/**
- * @description: 转换特殊对象为普通对象
- * @param {*} obj 需转换的对象
- * @return {*}
- */
+// 转换特殊对象为普通对象
 function transObj (obj) {
   let newObj = {}
   Object.keys(obj).map(key => {
