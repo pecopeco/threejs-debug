@@ -24,7 +24,6 @@ const getThree = () => {
     sendResponse
   ) {
     three.value = request
-    console.log(request)
     sendResponse('get content-script message, callback')
   })
 }
