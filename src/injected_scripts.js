@@ -10,13 +10,15 @@ function postContent () {
 
 // 监听camera属性变化
 let three
-let timer
 Object.defineProperty(window, 'threeObj', { 
   set: function (newValue) {
     three = newValue
-    const camera = three.camera
-    let x = camera.position.x
-    Object.defineProperty(camera.position, 'x', {
+    // Object.keys(three).map(key => {
+    //   listenerObj(three[key])
+    // })
+    let x = three.camera.position.x
+    let timer
+    Object.defineProperty(three.camera.position, 'x', {
       get () {
         return x
       },
@@ -33,22 +35,45 @@ Object.defineProperty(window, 'threeObj', {
   }
 })
 
+// function listenerObj (obj) {
+//   Object.keys(obj).map(key => {
+//     let temValue = obj[key]
+//     if (typeof temValue === 'object') {
+//       listenerObj(obj[key])
+//     } else {
+//       Object.defineProperty(obj, key, {
+//         get () {
+//           return temValue
+//         },
+//         set (val) {
+//           temValue = val
+//           if (timer) return
+//           timer = setTimeout(() => {
+//             postContent()
+//             clearTimeout(timer)
+//             timer = null
+//           }, 20)
+//         }
+//       })
+//     }
+//   })
+// }
+
 /**
  * @description: 转换特殊对象为普通对象
  * @param {*} obj 需转换的对象
- * @param {*} layer 转换层数限制
  * @return {*}
  */
-function transObj (obj, layer = 0) {
+function transObj (obj) {
   let newObj = {}
   Object.keys(obj).map(key => {
     if (
-      (!(isFinite(obj[key]) && typeof obj[key] === 'number') && !obj[key]) ||
-      typeof obj[key] === 'function' ||
-      key === 'children'
+      (!(isFinite(obj[key]) && typeof obj[key] === 'number') && !obj[key]) || // 为空
+      typeof obj[key] === 'function' || // 函数类型
+      key === 'children' // 多层嵌套
     ) return
-    if (typeof obj[key] === 'object' && layer < 1) {
-      return newObj[key] = transObj(obj[key], 1)
+    if (typeof obj[key] === 'object') {
+      return newObj[key] = transObj(obj[key])
     } else {
       newObj[key] = obj[key]
     }
