@@ -1,19 +1,20 @@
 // 传递threejs对象到content
 function postContent () {
-  if (!scene || !camera) {
+  if (!three) {
     return
   }
   // 将获取到的threejs对象传递给content_scripts
-  let postEvent = new CustomEvent('injected_event', { detail: { scene: transObj(scene), camera: transObj(camera) }})
+  let postEvent = new CustomEvent('injected_event', { detail: { scene: transObj(three.scene), camera: transObj(three.camera) }})
   window.dispatchEvent(postEvent)
 }
 
 // 监听camera属性变化
-let camera
+let three
 let timer
-Object.defineProperty(window, 'camera', { 
+Object.defineProperty(window, 'threeObj', { 
   set: function (newValue) {
-    camera = newValue
+    three = newValue
+    const camera = three.camera
     let x = camera.position.x
     Object.defineProperty(camera.position, 'x', {
       get () {
@@ -29,14 +30,6 @@ Object.defineProperty(window, 'camera', {
         }, 20)
       }
     })
-  }
-})
-
-// 监听scene属性变化
-let scene
-Object.defineProperty(window, 'scene', { 
-  set: function (newValue) { 
-    scene = newValue
   }
 })
 

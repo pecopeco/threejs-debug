@@ -54,7 +54,7 @@ watch(showList, () => {
     position: relative;
     display: flex;
     align-items: center;
-    padding: 5px 0;
+    padding: 3px 0;
     cursor: pointer;
     &:hover {
       background: rgba(135, 135, 135 ,.3)

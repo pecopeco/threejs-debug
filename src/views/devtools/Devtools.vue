@@ -1,7 +1,6 @@
 <template>
   <div class="devtools">
-    <Tree :threeObj="camera" :title="'camera'" />
-    <Tree :threeObj="scene" :title="'scene'" />
+    <Tree :three="three" title="three" />
     <div class="checkbox">
       <input type="checkbox" v-model="isAutoRefresh">
       <span>自动刷新</span>
@@ -17,16 +16,15 @@ import { ref, onMounted, watch } from 'vue'
 import Tree from '@/components/Tree.vue'
 
 // 监听来自content-script的消息
-const scene = ref({})
-const camera = ref({})
+const three = ref({})
 const getThree = () => {
   chrome.runtime.onMessage.addListener(function (
     request,
     sender,
     sendResponse
   ) {
-    scene.value = request.scene
-    camera.value = request.camera
+    three.value = request
+    console.log(request)
     sendResponse('get content-script message, callback')
   })
 }

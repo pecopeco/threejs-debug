@@ -10,7 +10,7 @@
       <div class="title">{{title}}</div>
     </div>
     <div class="item-list" :style="{ height: listHeight }">
-      <TreeItem v-for="item in Object.keys(threeObj)" :objKey="item" :objVal="threeObj[item]" />
+      <TreeItem v-for="item in Object.keys(three)" :objKey="item" :objVal="three[item]" />
     </div>
   </div>
 </template>
@@ -21,16 +21,16 @@ import TreeItem from '@/components/TreeItem.vue'
 
 // 获取props传递参数
 const props = defineProps({
-  threeObj: Object,
+  three: Object,
   title: String
 })
-const { threeObj, title } = toRefs(props)
+const { three, title } = toRefs(props)
 
 // 列表高度
 const showList = ref(false)
 const listHeight = ref(0)
 watch(showList, () => {
-  listHeight.value = (Object.keys(threeObj.value).length * 24) + 24 + 'px'
+  listHeight.value = (Object.keys(three.value).length * 24) + 24 + 'px'
   if (showList.value) {
     setTimeout(() => { listHeight.value = 'auto' }, 300)
   } else {
