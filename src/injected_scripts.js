@@ -68,3 +68,18 @@ function transObj (obj) {
   })
   return newObj
 }
+
+// 监听content_scripts发送的消息，更新three对象
+window.addEventListener('content_event', function (params) {
+  const { objParent, val } = { ...params.detail }
+  setThree(three, objParent, val)
+})
+
+// 给three对象赋值
+function setThree (obj, parentArr, val) {
+  if (parentArr.length > 1) {
+    setThree(obj[parentArr[0]], parentArr.slice(1), val)
+  } else {
+    obj[parentArr[0]] = val
+  }
+}

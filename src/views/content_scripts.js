@@ -20,6 +20,12 @@ chrome.runtime.onMessage.addListener(function (
   sendResponse
 ) {
   devtoolsInit = request.devtoolsInit
-  three && devtoolsInit && chrome.runtime.sendMessage(three)
+  const newThreeObj = request.newThreeObj
+  if (newThreeObj) { // 通过输入框填写值更新threeObj
+    let postEvent = new CustomEvent('content_event', { detail: newThreeObj })
+    window.dispatchEvent(postEvent)
+  } else { // devtools初始化或者点击刷新按钮
+    three && devtoolsInit && chrome.runtime.sendMessage(three)
+  }
   sendResponse('get devtools message, callback')
 })

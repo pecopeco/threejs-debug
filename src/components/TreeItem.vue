@@ -8,29 +8,61 @@
         src="@/assets/down.png"
         @click="showList = !showList"
       >
-      <div class="content">
+      <div class="content" @click.stop="checkItem">
         <div class="key">
           <span>{{objKey}}</span>
           <span v-if="(typeof objVal) !== 'object'">：</span>
         </div>
-        <div class="value" v-if="(typeof objVal) !== 'object'">{{objVal}}</div>
+        <div class="value" v-if="(typeof objVal) !== 'object'">
+          <input v-if="showInput && allowInput" :type="typeof objVal === 'number' ? 'number' : 'text' " v-model="inputVal" @change="changeInput" />
+          <span v-else>{{objVal}}</span>
+        </div>
       </div>
     </div>
     <div class="item-list" v-if="typeof objVal === 'object'" :style="{ height: listHeight }">
-      <TreeItem v-for="item in Object.keys(objVal)" :objKey="item" :objVal="objVal[item]" />
+      <TreeItem v-for="item in Object.keys(objVal)" :tabId="tabId" :objKey="item" :objVal="objVal[item]" :objParent="objParent.concat([objKey])" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, defineProps, computed, toRefs } from 'vue'
+import { ref, inject, defineProps, watch, toRefs } from 'vue'
 
 // 获取props传递参数
 const props = defineProps({
+  tabId: Number,
   objKey: String,
-  objVal: [String, Number, Object]
+  objVal: [String, Number, Object],
+  objParent: Array
 })
-const { objKey, objVal } = toRefs(props)
+const { tabId, objKey, objVal, objParent } = toRefs(props)
+
+const showInput = ref(false)
+const inputVal = ref(objVal.value)
+
+// 监听全局点击事件，恢复输入状态
+const allowInput = inject('allowInput')
+watch(allowInput, () => {
+  showInput.value = false
+})
+
+// 点击值
+const checkItem = () => {
+  showInput.value = true
+  inputVal.value = objVal.value
+}
+
+// 监听输入框
+const changeInput = (e) => {
+  const val = typeof objVal.value === 'number' ? +e.target.value : e.target.value
+  postThree(val)
+  showInput.value = false
+}
+
+// 通知content_scripts更新threejs对象
+const postThree = (val) => {
+  chrome.tabs.sendMessage(tabId.value, { devtoolsInit: true, newThreeObj: { val: val, objParent: objParent.value.concat([objKey.value]) } }, response => {})
+}
 
 // 列表高度
 const showList = ref(false)

@@ -1,6 +1,6 @@
 <template>
   <div class="devtools">
-    <Tree :three="three" title="three" />
+    <Tree :three="three" title="three" :tabId="tabId" />
     <div class="refresh" @click="postThree">
       <img src="@/assets/refresh.png">
     </div>
@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, provide, onMounted, onUnmounted } from 'vue'
 import Tree from '@/components/Tree.vue'
 
 // 监听来自content-script的消息
@@ -58,7 +58,20 @@ const initPanel = () => {
 
 onMounted(() => {
   initPanel()
+  window.addEventListener('click', clickHandle)
 })
+
+onUnmounted(() => {
+  window.removeEventListener('click', clickHandle)
+})
+
+// 监听全局点击事件，用于恢复输入框输入状态
+const allowInput = ref(1)
+provide('allowInput', allowInput)
+const clickHandle = () => {
+  allowInput.value = +new Date()
+}
+
 </script>
 
 <style lang="stylus" scoped>

@@ -10,21 +10,22 @@
       <div class="title">{{title}}</div>
     </div>
     <div class="item-list" :style="{ height: listHeight }">
-      <TreeItem v-for="item in Object.keys(three)" :objKey="item" :objVal="three[item]" />
+      <TreeItem v-for="item in Object.keys(three)" :tabId="tabId" :objKey="item" :objVal="three[item]" :objParent="[]" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, defineProps, watch } from 'vue'
 import TreeItem from '@/components/TreeItem.vue'
 
 // 获取props传递参数
 const props = defineProps({
+  tabId: Number,
   three: Object,
   title: String
 })
-const { three, title } = toRefs(props)
+const { tabId, three, title } = toRefs(props)
 
 // 列表高度
 const showList = ref(false)
