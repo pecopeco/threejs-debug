@@ -16,7 +16,7 @@ function postContent () {
 
 // 监听threeObj赋值
 let three
-Object.defineProperty(window, 'threeObj', { 
+Object.defineProperty(window, 'threeObj', {
   set: function (newValue) {
     three = newValue
     Object.keys(three).map(key => {
