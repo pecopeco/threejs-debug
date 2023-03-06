@@ -9,7 +9,7 @@
       >
       <div class="title">{{title}}</div>
     </div>
-    <div class="item-list" :style="{ height: listHeight }">
+    <div class="item-list" v-if="three" :style="{ height: listHeight }">
       <TreeItem v-for="item in Object.keys(three)" :tabId="tabId" :objKey="item" :objVal="three[item]" :objParent="[]" />
     </div>
   </div>
@@ -31,6 +31,7 @@ const { tabId, three, title } = toRefs(props)
 const showList = ref(false)
 const listHeight = ref(0)
 watch(showList, () => {
+  if (!three.value) return
   listHeight.value = (Object.keys(three.value).length * 24) + 24 + 'px'
   if (showList.value) {
     setTimeout(() => { listHeight.value = 'auto' }, 300)

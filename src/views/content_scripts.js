@@ -9,7 +9,12 @@ window.addEventListener('injected_event', function (params) {
   // 保存three
   three = params.detail
   // 发送到devtools
-  devtoolsInit && chrome.runtime.sendMessage(three)
+  devtoolsInit && chrome.runtime.sendMessage({
+    message: three,
+    responseCallback: (e) => {
+      console.log(e)
+    }
+  })
 })
 
 // 监听devtools传递的消息，发送three对象

@@ -66,6 +66,7 @@ export default ({ mode }) => {
     ],
     build: {
       target: "es2015",
+      minify: false,
       rollupOptions: {
         input: resolve(__dirname, 'src/manifest.json') // 将源码中的manifest.json作为入口文件
       },
