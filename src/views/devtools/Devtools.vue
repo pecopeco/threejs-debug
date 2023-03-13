@@ -19,7 +19,7 @@ const getThree = () => {
     sender,
     sendResponse
   ) {
-    three.value = request
+    three.value = request.message
     sendResponse('get content-script message, callback')
   })
 }
