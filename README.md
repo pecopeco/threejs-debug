@@ -1,4 +1,4 @@
-# 适用于threejs的chrome调试插件
+### 用于threejs项目的chrome调试插件
 
 # 编译
 nodejs版本 <= 15
