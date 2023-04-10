@@ -4,13 +4,10 @@ function postContent () {
   if (!three || timer) {
     return
   }
-  // 仅监听scene和camera对象的属性，贴图等数据量较大，无法通过chrome.runtime发送
-  let detail = {}
-  Object.keys(transObj(three)).map(key => {
-    if (key.includes('scene') || key.includes('camera') || key.includes('Camera')) {
-      detail[key] = transObj(three)[key]
-    }
-  })
+  // 仅监听scene、controls和camera对象的属性，贴图等数据量较大，无法通过chrome.runtime发送
+  const { scene, camera, controls } = transObj(three)
+  let detail = { scene, camera, controls }
+  detail.controls = { object: controls.object, target: controls.target }
   // 限制每20毫秒只更新一次
   timer = setTimeout(() => {
     // 将获取到的threejs对象传递给content_scripts
